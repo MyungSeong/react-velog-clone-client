@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './app/App';
-import store from '@redux/index';
+import store from '@root/redux';
 import { BASENAME } from '@root/utils/constants/Config';
 
 render(
