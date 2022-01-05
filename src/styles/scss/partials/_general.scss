@@ -1,0 +1,7 @@
+@import './mixins/font';
+
+@include font-face('Noto Sans KR', 'NotoSansKR-Medium', 300, normal, swap);
+
+* {
+    font-family: 'Noto Sans KR';
+}

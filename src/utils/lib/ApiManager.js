@@ -33,7 +33,8 @@ export default class ApiManager {
             'Content-Type': 'application/json; charset=UTF-8',
             // 'Content-Type': 'application/json;',
             // 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            Authorization: `Bearer ${getCookie('fresh_a_token')}`,
+            // Authorization: `Bearer ${getCookie('X-AUTH-TOKEN')}`,
+            'X-CSRF-TOKEN': getCookie('X-CSRF-TOKEN'),
         };
         return this.headers;
     };

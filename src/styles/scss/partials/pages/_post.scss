@@ -1,0 +1,11 @@
+@import '../mixins/font';
+
+@include font-face('Noto Sans KR', 'NotoSansKR-Medium', 300, normal, swap);
+
+.loading-block {
+    display: block;
+    height: 1px;
+    min-height: 1px;
+    margin: 0 auto;
+    text-align: center;
+}

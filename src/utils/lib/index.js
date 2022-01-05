@@ -1,20 +1,21 @@
 export { default as ApiManager } from './ApiManager';
+export { default as InfiniteScroll } from './InfiniteScroll';
 
 /*  timestamp 날짜형식 변환  */
 const timestampDefaultFormat = {
-    Y: ".",
-    M: ".",
-    D: "",
-    h: ":",
-    m: ":",
-    s: ""
+    Y: '.',
+    M: '.',
+    D: '',
+    h: ':',
+    m: ':',
+    s: '',
 };
 
 /** Timstamp to custom format */
 export const dateFormatConverter = (
     ts,
     customFormat = null,
-    filters = null
+    filters = null,
 ) => {
     let format = { ...timestampDefaultFormat };
     if (customFormat) format = { ...format, ...customFormat };
@@ -25,7 +26,10 @@ export const dateFormatConverter = (
             date.getMonth() + 1 < 10
                 ? `0${date.getMonth() + 1}`
                 : date.getMonth() + 1,
-        D: date.getDate() + 1 < 10 ? `0${date.getDate() + 1}` : date.getDate() + 1,
+        D:
+            date.getDate() + 1 < 10
+                ? `0${date.getDate() + 1}`
+                : date.getDate() + 1,
         h:
             date.getHours() + 1 < 10
                 ? `0${date.getHours() + 1}`
@@ -37,11 +41,11 @@ export const dateFormatConverter = (
         s:
             date.getSeconds() + 1 < 10
                 ? `0${date.getSeconds() + 1}`
-                : date.getSeconds() + 1
+                : date.getSeconds() + 1,
     };
 
     if (filters) {
-        let rr = "";
+        let rr = '';
         for (let i of filters) {
             rr += `${result[i]}${format[i]} `;
         }
@@ -53,29 +57,23 @@ export const dateFormatConverter = (
 /**
  * 금액 포맷터
  */
-export const stringToMoneyFormat = (v, unit = "") => {
-    const value = String(v)
-        .split("")
-        .reverse()
-        .join("");
+export const stringToMoneyFormat = (v, unit = '') => {
+    const value = String(v).split('').reverse().join('');
     const valueLength = value.length;
-    let result = "";
+    let result = '';
     for (let ii in value) {
         result += String(value[ii]);
         if ((ii + 1) % 3 === 0 && ii < valueLength - 1) {
-            result += ",";
+            result += ',';
         }
     }
-    return `${result
-        .split("")
-        .reverse()
-        .join("")}${unit}`;
+    return `${result.split('').reverse().join('')}${unit}`;
 };
 
 /**
  *
  */
-export const momentDateToString = value => {
+export const momentDateToString = (value) => {
     const year = value.year();
     const month =
         value.month() + 1 < 10 ? `0${value.month() + 1}` : value.month() + 1;
@@ -83,8 +81,6 @@ export const momentDateToString = value => {
 
     return `${year}-${month}-${day}`;
 };
-
-
 
 /**
  * setSession
@@ -105,11 +101,18 @@ export const setSession = (key, value) => {
  * @param {*} url
  * @오경우 2019-10-14 14:59:08
  */
-export const getSession = key => {
+export const getSession = (key) => {
     const session = window.sessionStorage.getItem(key);
     return JSON.parse(session);
 };
 
 export const clearSession = () => {
     window.sessionStorage.clear();
+};
+
+export const emailCheck = (email) => {
+    let regex =
+        /^[0-9a-zA-Z]([-_.0-9a-zA-Z])*@[0-9a-zA-Z]([-_.0-9a-zA-z])*.([a-zA-Z])*/;
+
+    return regex.test(email);
 };

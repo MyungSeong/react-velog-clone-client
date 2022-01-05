@@ -3,6 +3,15 @@ const sassSourcemapsPlugin = require('./plugins/sass-sourcemap');
 const imageOptimizerPlugin = require('craco-image-optimizer-plugin');
 
 module.exports = {
+    style: {
+        css: {
+            loaderOptions: () => {
+                return {
+                    url: false,
+                };
+            },
+        },
+    },
     plugins: [
         { plugin: sassSourcemapsPlugin },
         {
