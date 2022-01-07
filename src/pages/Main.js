@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,18 +8,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Header from '@layout/Header';
 import Post from '@components/Post';
 
-import { useDispatch, useSelector } from 'react-redux';
-// import PostActions from '@redux/';
+import PostActions from '@redux/Posts/PostsAction';
 
 const Main = () => {
+    const { postInfo } = useSelector((state) => state.PostInfo);
     const dispatch = useDispatch();
-    // const post_list = useSelector((state) => state.post.list);
-
-    // console.log(post_list);
 
     useEffect(() => {
-        // dispatch(postActions.getPostMW());
-    }, [dispatch]);
+        console.log(`prev: ${postInfo}`);
+        dispatch(PostActions.getPosts());
+        console.log(`next: ${postInfo}`);
+
+        console.log(postInfo);
+    }, [postInfo, dispatch]);
+
+    const postData = {
+        postingId: 1,
+        title: 'test',
+        content: 'test',
+        createdAt: 20220101,
+        commentCount: 1,
+        userName: 'testUser',
+        imageUrl: null,
+    };
 
     return (
         <>
@@ -27,9 +39,9 @@ const Main = () => {
                 <FontAwesomeIcon style={{ margin: '0 10px' }} icon={faClock} />
                 최신
             </Recent>
-
             <PostList>
-                {/* {post_list.map((p, idx) => {
+                <Post key={postData.postingId} {...postData} />
+                {/* {postInfo?.data?.map((p, idx) => {
                     return <Post key={idx} {...p} />;
                 })} */}
             </PostList>

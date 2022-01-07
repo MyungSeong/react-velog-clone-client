@@ -21,7 +21,7 @@ import UserActions from '@redux/Users/UsersAction';
 const Header = () => {
     // const isLogin = useSelector((state) => state.user.is_login);
     // console.log('로그인', isLogin);
-    const isLogin = false;
+    const isLogin = true;
 
     const dispatch = useDispatch();
 
@@ -133,7 +133,7 @@ const Header = () => {
 const VelogLogo = styled.svg`
     width: 71px;
     height: 24px;
-    margin-left: -5px;
+    margin-left: -205px;
     cursor: pointer;
 `;
 

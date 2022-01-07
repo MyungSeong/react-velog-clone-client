@@ -3,45 +3,45 @@ import styled from 'styled-components';
 import { history } from '@reduxConfig';
 
 const Post = ({
-    postingId,
+    id,
     title,
     content,
-    dayBefore,
+    createdAt,
     commentCount,
     userName,
     imageUrl,
 }) => {
     return (
         <>
-            <Wrap>
+            <Wrapper>
                 <ImageBtn
                     onClick={() => {
-                        history.push(`/posts/${postingId}`);
+                        history.push(`/posts/${id}`);
                     }}
                 >
                     <Image src={imageUrl} />
                 </ImageBtn>
                 <Description
                     onClick={() => {
-                        history.push(`/posts/${postingId}`);
+                        history.push(`/posts/${id}`);
                     }}
                 >
                     <TextWrap>
                         <Title>{title}</Title>
                         <Text>{content}</Text>
                     </TextWrap>
-                    <Date>{dayBefore} · </Date>
+                    <Date>{createdAt} · </Date>
                     <Comment>{commentCount}개의 댓글</Comment>
                 </Description>
                 <UserName>
                     by <span style={{ fontWeight: 'bold' }}>{userName}</span>
                 </UserName>
-            </Wrap>
+            </Wrapper>
         </>
     );
 };
 
-const Wrap = styled.div`
+const Wrapper = styled.div`
     position: relative;
     box-sizing: border-box;
     width: 320px;

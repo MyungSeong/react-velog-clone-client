@@ -1,17 +1,34 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Editor } from '@toast-ui/react-editor';
 
 import { history } from '@reduxConfig';
-
 import PostsAction from '@redux/Posts/PostsAction';
 
 import { getCookie } from '@lib/Cookie';
 
+import Header from '@layout/Header';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+
+import { PostEditor } from '@layout/Post';
+
+import { Editor } from '@toast-ui/react-editor';
+import Prism from 'prismjs';
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+import chart from '@toast-ui/editor-plugin-chart';
+import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
+import uml from '@toast-ui/editor-plugin-uml';
+
+import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import 'prismjs/themes/prism.css';
+import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+import 'tui-color-picker/dist/tui-color-picker.css';
+import '@toast-ui/chart/dist/toastui-chart.css';
 
 const AddPost = () => {
     const [title, setTitle] = useState('');
@@ -44,75 +61,94 @@ const AddPost = () => {
     };
 
     const addPost = () => {
-        const contentHTML = editorRef.current.getInstance().getHTML();
+        console.log(editorRef);
+
+        // const contentHTML = editorRef.current.getInstance().getHTML();
         const contentMarkdown = editorRef.current.getInstance().getMarkdown();
         // const image = contentHTML.split("=")[1]?.split('"')[1];
 
-        const imageUrl = contentHTML.split('=')[1]?.split('"')[1];
+        // const imageUrl = contentHTML.split('=')[1]?.split('"')[1];
         const content = contentMarkdown.replaceAll('#', '').split('!')[0];
 
         const post = {
             // userName: jwtToken,
             content: content,
             title: title,
-            imageUrl: imageUrl,
+            // imageUrl: imageUrl,
         };
         console.log(post);
-        // dispatch(PostsAction.addPostMW(post));
+
+        dispatch(PostsAction.addPost(post));
+
+        // history.goBack();
     };
 
     return (
-        <React.Fragment>
-            <MDWrap>
+        <>
+            <Header />
+            <PostWrapper>
                 <Title
                     type='title'
                     placeholder='제목을 입력하세요'
                     onChange={changeTitle}
                 ></Title>
+                {/* <PostEditor height={'78vh'} ref={editorRef} /> */}
                 <Editor
-                    placeholder='당신의 이야기를 적어보세요...'
-                    usageStatistics={false}
-                    previewStyle='vertical'
-                    previewHighlight={false}
                     height='80vh'
+                    placeholder='당신의 이야기를 적어보세요...'
+                    initialEditType='markdown'
+                    previewStyle='vertical'
+                    previewHighlight='false'
+                    useCommandShortcut={true}
+                    usageStatistics='false'
+                    plugin={[
+                        codeSyntaxHighlight,
+                        colorSyntax,
+                        chart,
+                        tableMergedCell,
+                        uml,
+                        { highlighter: Prism },
+                    ]}
                     ref={editorRef}
                 />
-            </MDWrap>
+            </PostWrapper>
             <ButtonWrapper>
-                <CancelButtonWrapper
+                <CancelButton
                     variant='primary'
                     type='submit'
                     className='submitBtn'
                     onClick={cancelPost}
                 >
-                    <MdOutlineArrowBack style={{ marginRight: '10px' }} />
+                    <FontAwesomeIcon
+                        icon={faChevronLeft}
+                        style={{ marginRight: '10px' }}
+                    />
                     나가기
-                </CancelButtonWrapper>
-
-                <Add
+                </CancelButton>
+                <AddButton
                     variant='primary'
                     type='submit'
                     className='submitBtn'
                     onClick={addPost}
                 >
                     출간하기
-                </Add>
+                </AddButton>
             </ButtonWrapper>
-        </React.Fragment>
+        </>
     );
 };
 
-const MDWrap = styled.div`
-    height: calc(100%-130px);
+const PostWrapper = styled.div`
+    height: 100%;
     box-sizing: border-box;
 `;
 
 const Title = styled.textarea`
     width: 100%;
-    height: 130px;
+    height: 100px;
     resize: none;
     scrollbar-width: none;
-    font-size: 48px;
+    font-size: 32px;
     font-weight: bold;
     border: none;
     padding: 40px;
@@ -121,9 +157,11 @@ const Title = styled.textarea`
         'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', 나눔고딕,
         'Nanum Gothic', 'Noto Sans KR', 'Noto Sans CJK KR', arial, 돋움, Dotum,
         Tahoma, Geneva, sans-serif;
+
     &::-webkit-scrollbar {
         display: none;
     }
+
     &::placeholder {
         color: lightgray;
     }
@@ -141,32 +179,34 @@ const ButtonWrapper = styled.div`
     box-shadow: 0 0 5px #dbdbdb;
 `;
 
-const CancelButtonWrapper = styled.button`
+const CancelButton = styled.button`
     border: none;
     background-color: transparent;
-    font-size: 18px;
+    font-size: 16px;
     height: 40px;
     padding: 8px 15px;
     margin: 12px 0 0 15px;
     box-sizing: border-box;
     cursor: pointer;
     border-radius: 5px;
+
     &:hover {
         background-color: #e6e6e6;
     }
 `;
 
-const AddButtonWrapper = styled.button`
+const AddButton = styled.button`
     border: none;
     color: #fff;
     font-weight: bold;
     background-color: rgb(18, 184, 134);
-    font-size: 18px;
+    font-size: 16px;
     height: 40px;
     padding: 8px 20px;
     margin: 12px 15px 0 0;
     cursor: pointer;
     border-radius: 5px;
+
     &:hover {
         background-color: rgb(18, 194, 124);
     }

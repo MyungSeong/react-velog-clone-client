@@ -7,6 +7,8 @@ import { history } from '@reduxConfig';
 import routes from '@routes';
 
 import Main from './Main';
+import AddPost from './AddPost';
+import ViewPost from './ViewPost';
 
 import '@styles/scss/style.scss';
 
@@ -27,6 +29,8 @@ const PagesIndex = () => {
         <>
             <ConnectedRouter history={history}>
                 <Route path='/' exact component={Main} />
+                <Route path='/post' exact component={AddPost} />
+                <Route path='/post/:id' exact component={ViewPost} />
                 {/* {pages} */}
                 {/* <div>Test</div> */}
                 {/* <Redirect from='/' to={BASENAME} /> */}

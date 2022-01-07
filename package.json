@@ -21,6 +21,7 @@
         "craco-image-optimizer-plugin": "^0.0.5",
         "date-fns": "^2.26.0",
         "moment": "^2.29.1",
+        "prismjs": "^1.25.0",
         "prop-types": "^15.7.2",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",

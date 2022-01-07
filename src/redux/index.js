@@ -5,7 +5,7 @@ import { connectRouter } from 'connected-react-router';
 import { logger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { UserInfo } from './modules';
+import { UserInfo, PostInfo } from './modules';
 
 export const history = createBrowserHistory();
 
@@ -13,6 +13,7 @@ const middlewares = [thunk.withExtraArgument({ history: history })];
 
 const reducers = combineReducers({
     UserInfo,
+    PostInfo,
     router: connectRouter(history),
 });
 
