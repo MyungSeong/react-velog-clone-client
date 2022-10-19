@@ -1,17 +1,23 @@
 import Types from '../../ActionConstant';
 
 const initialState = {
-    userInfo: {},
+    userInfo: {
+        // userName: '',
+    },
     isLogin: false,
-}
+};
 
-const reducer = (state = initialState, {type, payload}) => {
+const reducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case Types.SIGNIN_USER:
-            return {...state, userInfo: payload};
+            return {
+                ...state,
+                userInfo: payload,
+                isLogin: true,
+            };
 
         default:
-            return {...state};
+            return { ...state };
     }
 };
 

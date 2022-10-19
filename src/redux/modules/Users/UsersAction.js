@@ -1,3 +1,4 @@
+import * as UsersApi from '@api/UsersApi';
 import Types from '../../ActionConstant';
 
 const UsersAction = {
@@ -6,15 +7,26 @@ const UsersAction = {
      * @param {Object} userInfo 로그인 정보
      * @returns
      */
-    signinUser: (userInfo) => async (dispatch) => {
-        try {
-            dispatch({ type: Types.SIGNIN_USER, payload: userInfo });
+    signInUser: (userInfo) => async (dispatch) => {
+        dispatch({ type: Types.SIGNIN_USER });
 
-            return true;
+        try {
+            const result = await UsersApi.signInUser(userInfo);
+
+            if (!result) throw new Error(`Error user login failed: ${result}`);
+
+            dispatch({
+                type: Types.SIGNIN_USER_SUCCESS,
+                payload: result,
+            });
         } catch (error) {
-            return false;
+            dispatch({
+                type: Types.SIGNIN_USER_FAILURE,
+                payload: error,
+            });
         }
     },
+    signOutUser: () => async (dispatch) => {},
 };
 
 export default UsersAction;

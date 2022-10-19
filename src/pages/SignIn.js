@@ -14,22 +14,23 @@ import welcomeImage from '@assets/undraw_joyride_hnno.fae6b95e.svg';
 
 import { emailCheck } from '@lib';
 
+import { history } from '@reduxConfig';
 import UserActions from '@redux/Users/UsersAction';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignIn = ({ onClickModal }) => {
-    const [userId, setUserId] = useState('');
+    const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
     const dispatch = useDispatch();
 
-    const userIdRef = useRef();
+    const idRef = useRef();
     const passwordRef = useRef();
 
     const onChangeID = (e) => {
-        setUserId(e.target.value);
+        setId(e.target.value);
     };
 
     const onChangePassword = (e) => {
@@ -37,7 +38,7 @@ const SignIn = ({ onClickModal }) => {
     };
 
     const onClickSignIn = () => {
-        if (!emailCheck(userId)) {
+        if (!emailCheck(id)) {
             toast.error('잘못된 이메일 형식입니다.', {
                 autoClose: 2000,
                 position: toast.POSITION.TOP_RIGHT,
@@ -45,12 +46,12 @@ const SignIn = ({ onClickModal }) => {
                 transition: Flip,
             });
 
-            userIdRef.current.focus();
+            idRef.current.focus();
 
             return;
         }
 
-        if (!userId | !password) {
+        if (!id | !password) {
             toast.error('이메일 또는 비밀번호를 입력해주세요.', {
                 autoClose: 2000,
                 position: toast.POSITION.TOP_RIGHT,
@@ -58,12 +59,23 @@ const SignIn = ({ onClickModal }) => {
                 transition: Flip,
             });
 
-            userIdRef.current.focus();
+            idRef.current.focus();
 
             return;
         }
 
-        dispatch(UserActions.signInUser(userId, password));
+        try {
+            dispatch(UserActions.signInUser({ id, password }));
+        } catch (error) {
+            toast.error('이메일 또는 비밀번호를 확인해주세요.', {
+                autoClose: 2000,
+                position: toast.POSITION.TOP_RIGHT,
+                theme: 'colored',
+                transition: Flip,
+            });
+
+            idRef.current.focus();
+        }
     };
 
     const showPasswordToggle = () => {
@@ -96,10 +108,10 @@ const SignIn = ({ onClickModal }) => {
                             이메일
                         </Text>
                         <Input
-                            _ref={userIdRef}
+                            _ref={idRef}
                             padding='12px 0px'
                             margin='0px 12px 12px 0px'
-                            value={userId}
+                            value={id}
                             name='email'
                             placeholder='메일을 입력해주세요'
                             _onChange={onChangeID}

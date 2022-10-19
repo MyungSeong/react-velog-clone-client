@@ -1,20 +1,26 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { history } from '@reduxConfig';
 import PostsAction from '@redux/Posts/PostsAction';
 
 import Header from '@layout/Header';
-// import Comment from '../components/Comment';
+import Comment from '@components/Comment';
 import DefaultProfileImage from '@assets/profile.png';
+import { useState } from 'react';
 
 const ViewPost = (props) => {
-    /* const comment_list = useSelector((state) => state.post.detail?.commentList);
+    const { commentInfo } = useSelector(
+        (state) => state.PostInfo.data?.comments,
+    );
     const dispatch = useDispatch();
 
-    const [comment, setComment] = React.useState();
-    const post = useSelector((state) => state.post.list);
+    const [comment, setComment] = useState('');
+
+    console.log(commentInfo);
+
+    /* const post = useSelector((state) => state.post.list);
     const detail = useSelector((state) => state.post.detail);
     const postingId = Number(props.match.params.postingId);
     const is_login = useSelector((state) => state.user.is_login);

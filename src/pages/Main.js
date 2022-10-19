@@ -6,6 +6,7 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Header from '@layout/Header';
+import Grid from '@components/common/Grid';
 import Post from '@components/Post';
 
 import PostActions from '@redux/Posts/PostsAction';
@@ -15,15 +16,11 @@ const Main = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(`prev: ${postInfo}`);
         dispatch(PostActions.getPosts());
-        console.log(`next: ${postInfo}`);
-
-        console.log(postInfo);
     }, [postInfo, dispatch]);
 
     const postData = {
-        postingId: 1,
+        id: 1,
         title: 'test',
         content: 'test',
         createdAt: 20220101,
@@ -41,9 +38,20 @@ const Main = () => {
             </Recent>
             <PostList>
                 <Post key={postData.postingId} {...postData} />
-                {/* {postInfo?.data?.map((p, idx) => {
-                    return <Post key={idx} {...p} />;
-                })} */}
+                {postInfo?.data?.map((data, index) => {
+                    return (
+                        <Post
+                            key={index}
+                            id={data.id}
+                            title={data.title}
+                            content={data.content}
+                            createdAt={data.createdAt}
+                            commentCount={data.commentCount}
+                            userName={data.userName}
+                            imageUrl={data.imageUrl}
+                        />
+                    );
+                })}
             </PostList>
         </>
     );

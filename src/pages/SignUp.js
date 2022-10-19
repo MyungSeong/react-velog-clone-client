@@ -17,18 +17,18 @@ import UserActions from '@redux/Users/UsersAction';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = ({ onClickModal }) => {
-    const [userId, setUserId] = useState('');
+    const [id, setId] = useState('');
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('');
 
     const dispatch = useDispatch();
 
-    const userIdRef = useRef();
+    const idRef = useRef();
     const passwordRef = useRef();
 
     const onChangeEmail = (e) => {
-        setUserId(e.target.value);
+        setId(e.target.value);
     };
 
     const onChangeUserName = (e) => {
@@ -44,7 +44,7 @@ const SignUp = ({ onClickModal }) => {
     };
 
     const onClickSignUp = () => {
-        if (!userId || !userName || !password || !passwordCheck) {
+        if (!id || !userName || !password || !passwordCheck) {
             toast.error('빈 칸을 입력해주세요.', {
                 autoClose: 2000,
                 position: toast.POSITION.TOP_RIGHT,
@@ -55,7 +55,7 @@ const SignUp = ({ onClickModal }) => {
             return;
         }
 
-        if (!emailCheck(userId)) {
+        if (!emailCheck(id)) {
             toast.error('잘못된 이메일 형식입니다.', {
                 autoClose: 2000,
                 position: toast.POSITION.TOP_RIGHT,
@@ -63,8 +63,8 @@ const SignUp = ({ onClickModal }) => {
                 transition: Flip,
             });
 
-            setUserId('');
-            userIdRef.current.focus();
+            setId('');
+            idRef.current.focus();
 
             return;
         }
@@ -84,7 +84,7 @@ const SignUp = ({ onClickModal }) => {
             return;
         }
 
-        // dispatch(userActions.SignUpDB(userId, password, userName));
+        // dispatch(userActions.SignUpDB(id, password, userName));
         onClickModal();
     };
 
@@ -112,10 +112,10 @@ const SignUp = ({ onClickModal }) => {
                             이메일 입력
                         </Text>
                         <Input
-                            _ref={userIdRef}
+                            _ref={idRef}
                             padding='12px 0px'
                             margin='0px 12px 12px 0px'
-                            value={userId}
+                            value={id}
                             name='email'
                             placeholder='메일을 입력해주세요'
                             _onChange={onChangeEmail}

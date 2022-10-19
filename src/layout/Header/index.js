@@ -19,9 +19,7 @@ import { history } from '@reduxConfig';
 import UserActions from '@redux/Users/UsersAction';
 
 const Header = () => {
-    // const isLogin = useSelector((state) => state.user.is_login);
-    // console.log('로그인', isLogin);
-    const isLogin = true;
+    const { isLogin } = useSelector((state) => state.UserInfo);
 
     const dispatch = useDispatch();
 
@@ -41,7 +39,7 @@ const Header = () => {
     };
 
     const onClickSignOut = () => {
-        // dispatch(UserActions.signOutUser());
+        dispatch(UserActions.signOutUser());
     };
 
     const onClickPost = () => {
@@ -155,11 +153,13 @@ const StyledModal = styled(ReactModalAdapter)`
             opacity: 1;
             transform: translateY(0px);
         }
+
         &.ReactModal__Overlay--before-close {
             opacity: 0;
             transform: translateY(-50px);
         }
     }
+
     &__content {
         width: 650px;
         height: 468px;

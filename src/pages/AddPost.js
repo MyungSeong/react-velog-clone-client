@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { history } from '@reduxConfig';
 import PostsAction from '@redux/Posts/PostsAction';
@@ -31,6 +31,8 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/chart/dist/toastui-chart.css';
 
 const AddPost = () => {
+    const { userInfo } = useSelector((state) => state.UserInfo);
+
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
@@ -38,7 +40,7 @@ const AddPost = () => {
 
     const editorRef = useRef();
 
-    const jwtToken = getCookie('is_login');
+    // const jwtToken = getCookie('is_login');
 
     const changeTitle = (e) => {
         setTitle(e.target.value);
@@ -68,19 +70,19 @@ const AddPost = () => {
         // const image = contentHTML.split("=")[1]?.split('"')[1];
 
         // const imageUrl = contentHTML.split('=')[1]?.split('"')[1];
-        const content = contentMarkdown.replaceAll('#', '').split('!')[0];
+        // const content = contentMarkdown.replaceAll('#', '').split('!')[0];
 
         const post = {
-            // userName: jwtToken,
-            content: content,
             title: title,
+            content: contentMarkdown,
+            userName: userInfo.userName,
             // imageUrl: imageUrl,
         };
         console.log(post);
 
         dispatch(PostsAction.addPost(post));
 
-        // history.goBack();
+        history.goBack();
     };
 
     return (

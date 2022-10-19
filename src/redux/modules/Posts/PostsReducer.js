@@ -3,11 +3,17 @@ import Types from '../../ActionConstant';
 const initialState = {
     postInfo: {
         loading: false,
+        meta: {
+            // totalCount: 0,
+        },
         data: [
             /* {
                 id: 1,
                 title: '',
                 content: '',
+                createdAt: 19900101,
+                commentCount: 0,
+                userName: '',
                 imageUrl: '',
                 comments: [
                     {
@@ -35,6 +41,9 @@ const reducer = (state = initialState, { type, payload }) => {
         case Types.ADD_POST_SUCCESS:
             return {
                 ...state,
+                meta: {
+                    totalCount: state.postInfo.meta.totalCount + 1,
+                },
                 postInfo: {
                     ...state.postInfo,
                     loading: false,
@@ -71,7 +80,7 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 postInfo: {
                     ...state.postInfo,
-                    loading: true,
+                    loading: false,
                     ...state.postInfo.data,
                 },
             };
@@ -81,7 +90,7 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 postInfo: {
                     ...state.postInfo,
-                    loading: true,
+                    loading: false,
                     ...state.postInfo.data.error,
                 },
             };
@@ -110,6 +119,11 @@ const reducer = (state = initialState, { type, payload }) => {
                         }),
                     },
                 },
+            };
+
+        case Types.ADD_COMMENT_FAILURE:
+            return {
+                ...state,
             };
 
         default:

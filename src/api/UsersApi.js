@@ -1,38 +1,24 @@
-import { ApiManager } from '../utils';
-import { API_URL } from '@root/utils/constants/Config';
+import { ApiManager } from '@lib';
+import { API_URL } from '@constants/Config';
 
 const $http = new ApiManager();
 
 export const signUpUser = (data) => {
-    const url = `${API_URL}/user/signup`;
-
-    /*
-     * 서버에서 생성된 세션 key -> redux 스토어에 저장
-     */
-
-    $http.setHeader({
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': `${$http.getSession(data.token)}`,
-    });
+    const url = `${API_URL}/users/signup`;
 
     return $http.post(url, data);
 };
 
-export function loginUser(data) {
-    const url = `${API_URL}/user/login`;
-
-    $http.setHeader({
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': `${$http.getSession(data.token)}`,
-    });
+export const signInUser = (data) => {
+    const url = `${API_URL}/users/login`;
 
     return $http.post(url, data);
-}
+};
 
-export function logoutUser(data) {
-    const url = `${API_URL}/user/logout`;
+export const singOutUser = (data) => {
+    const url = `${API_URL}/users/logout`;
 
     $http.clearSession();
 
     return $http.delete(url, data);
-}
+};
