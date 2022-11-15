@@ -19,7 +19,7 @@
         "core-js": "^3.19.3",
         "cra-template-ko-craco": "1.4.1",
         "craco-image-optimizer-plugin": "^0.0.5",
-        "date-fns": "^2.26.0",
+        "date-fns": "^2.29.3",
         "moment": "^2.29.1",
         "prismjs": "^1.25.0",
         "prop-types": "^15.7.2",
