@@ -16,7 +16,7 @@
         "@toast-ui/editor-plugin-uml": "^3.0.1",
         "@toast-ui/react-editor": "^2.5.4",
         "connected-react-router": "^6.9.2",
-        "core-js": "^3.19.3",
+        "core-js": "^3.26.0",
         "cra-template-ko-craco": "1.4.1",
         "craco-image-optimizer-plugin": "^0.0.5",
         "date-fns": "^2.26.0",
